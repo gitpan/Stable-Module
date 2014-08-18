@@ -1,5 +1,9 @@
 Revision history for this software.
 
+0.02 2014-08-19 00:00:00
+  - remove slurp
+  - created by INABA Hitoshi
+
 0.01 2014-08-18 00:00:00
   - experimental release
   - created by INABA Hitoshi

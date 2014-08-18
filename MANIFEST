@@ -31,7 +31,6 @@ t/1003_ListMoreUtils_none.t
 t/1004_ListMoreUtils_notall.t
 t/1005_ListMoreUtils_uniq.t
 t/1101_feature_say.t
-t/1201_Perl6Slurp_slurp.t
 xtest.bat
 xt/0304_FileBasename_fileparse_5C.t
 xt/0305_FileBasename_basename_5C.t

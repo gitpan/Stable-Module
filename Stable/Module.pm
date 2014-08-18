@@ -8,7 +8,7 @@ package Stable::Module;
 # Copyright (c) 2014 INABA Hitoshi <ina@cpan.org>
 ######################################################################
 
-$Stable::Module::VERSION = 0.01;
+$Stable::Module::VERSION = 0.02;
 
 use 5.00503;
 use strict;
@@ -174,15 +174,6 @@ sub import {
     # use feature qw(say);
     *{$caller.'::say'} = \&_say;
     *IO::Handle::say   = \&_say if not defined(*IO::Handle::say);
-
-    # use Perl6::Slurp qw(slurp);
-    {
-        local $SIG{__DIE__} if exists $INC{'Strict/Perl.pm'}; # turn off Strict::Perl
-        eval q{ use Perl6::Slurp qw(slurp); };
-    }
-    if ($@) {
-        *{$caller.'::slurp'} = \&_slurp;
-    }
 }
 
 sub unimport {
@@ -531,22 +522,6 @@ sub _say {
     return print {$handle} @_, "\n";
 }
 
-sub _slurp {
-    if (@_ == 0) {
-        return do { local $/; <> };
-    }
-    else {
-        my $slurp = '';
-        local $/;
-        if (my $fh = IO::File->new($_[0],'r')) {
-            binmode($fh);
-            sysread($fh, $slurp, -s $fh);
-            close($fh);
-        }
-        return $slurp;
-    }
-}
-
 1;
 
 __END__
@@ -580,7 +555,6 @@ Stable::Module works as:
   use List::Util      qw(first shuffle max maxstr min minstr sum);
   use List::MoreUtils qw(all any none notall uniq);
   use feature         qw(say);
-  use Perl6::Slurp    qw(slurp);
 
 fileparse, basename, dirname, mkpath, rmtree, copy, and move can treat multibyte
 encoding of path name.
